@@ -43,6 +43,12 @@ void DS_clock_in_all_zeroes_8bit(void) {
     }
 }
 
+void DS_clock_in_all_ones_8bit(void) {
+    for(int i = (8); i > 0; i--) { // exactly eight times
+        DS_clock_in_data_bit();
+    }
+}
+
 /* need an alias here for what? */
 void DS_send_8_clr_bits(void) { // clock in 8 data bits, all 0's
     DS_clock_in_all_zeroes_8bit();
@@ -68,6 +74,12 @@ void DS_START_signal(void) {
     }   
 } // that's 32 bits of zeros
 
+void DS_END_signal(void) {
+    for(int i = (4); i > 0; i--) {
+        DS_clock_in_all_ones_8bit();
+    }
+}
+
 void DS_color_dark(void) { // a 32-bit frame
     DS_bright_bits(); // 8 bits
     DS_send_8_clr_bits(); // blue:  0x00  in 8 bits
@@ -77,6 +89,14 @@ void DS_color_dark(void) { // a 32-bit frame
 
 void blank_blinkt(void) {
     DS_START_signal(); // 32 bits
+
+    for(int i = (8); i > 0; i--) { // for each of eight dotstar pixels (on a strip of 8)
+        DS_color_dark();           // turn off that dotstar pixel
+    }
+    DS_END_signal();
+
+    // The START and END signals are not sent for each pixel,
+    // but for the entire strip of 8 of them.
 }
 
 void DS_sends_demo(void) {
