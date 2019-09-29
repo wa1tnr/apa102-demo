@@ -25,6 +25,12 @@ void DS_clock_in(void) {
     lower_DS_CLOCK();   uber_short_timer();
 }
 
+void DS_clock_in_data_bit(void) {
+    raise_DS_DATA();    uber_short_timer();
+    DS_clock_in();
+    lower_DS_DATA();    uber_short_timer();
+}
+
 void DS_clock_in_zero_data_bit(void) {
     lower_DS_DATA();    uber_short_timer();
     DS_clock_in();
@@ -49,6 +55,7 @@ void blank_blinkt(void) {
 
 void DS_sends_demo(void) {
     init_dotstar_gpio();
+    blank_blinkt();
 }
 
 void setup() {
