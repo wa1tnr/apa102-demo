@@ -43,11 +43,37 @@ void DS_clock_in_all_zeroes_8bit(void) {
     }
 }
 
+/* need an alias here for what? */
+void DS_send_8_clr_bits(void) { // clock in 8 data bits, all 0's
+    DS_clock_in_all_zeroes_8bit();
+}
+
+void DS_guard_bits(void) { // three guard bits
+    for(int i = (3); i > 0; i--) {
+       DS_clock_in_data_bit();
+    }
+}
+
+void DS_bright_bits(void) { // haha MSB first
+    DS_guard_bits(); // all 1's
+    for(int i = (4); i > 0; i--) {
+        DS_clock_in_zero_data_bit();
+    }
+    DS_clock_in_data_bit(); // not bright at all
+}
+
 void DS_START_signal(void) {
     for(int i = (4); i > 0; i--) {
         DS_clock_in_all_zeroes_8bit();
     }   
 } // that's 32 bits of zeros
+
+void DS_color_dark(void) { // a 32-bit frame
+    DS_bright_bits(); // 8 bits
+    DS_send_8_clr_bits(); // blue:  0x00  in 8 bits
+    DS_send_8_clr_bits(); // green: 0x00
+    DS_send_8_clr_bits(); // red:   0x00
+}
 
 void blank_blinkt(void) {
     DS_START_signal(); // 32 bits
