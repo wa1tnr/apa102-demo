@@ -1,0 +1,10 @@
+
+  Oddly, you must cd gcc to run the Makefile there.
+  Atmel Start puts it there, instead of in this
+  base directory (where source code written in C
+  will be edited by you).
+
+  wa1tnr
+
+  Sat Jul 28 14:23:04 UTC 2018
+

@@ -1,0 +1,10 @@
+ $ ag D6  # .. produced references to:
+
+driver_init.c
+atmel_start_config.atstart
+atmel_start_pins.h
+
+D6 had been specified for GPIO (it's one of two port pins
+to be used for an external DotStar LED strip in this
+project).
+

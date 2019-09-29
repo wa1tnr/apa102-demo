@@ -1,0 +1,13 @@
+dotstar demo - atmel start generated base
+
+Tested and working on these ATSAMD21 targets:
+
+  * Adafruit Metro M0 Express /w Pimoroni Blinkt (dotstar array) on D6 D7
+  * Adafruit Feather M0 Express
+  * Adafruit Circuit Playground Express
+
+Does NOT work with:
+
+  * Adafruit Gemma M0 (different MCU - not ATMSAMD21G18A or AU)
+
+Sun Jul 29 01:36:04 UTC 2018

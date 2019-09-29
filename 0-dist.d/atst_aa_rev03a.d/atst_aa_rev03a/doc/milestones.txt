@@ -1,0 +1,30 @@
+Sat Jul 28 19:33:00 UTC 2018
+
+     branch testing-dd:
+
+     * blue and cyan alternating Dotstar pattern - working demo.
+
+     * continues to flicker the D13 LED after setting up the dotstars,
+       every so often.
+
+     Dotstar is APA102
+
+     [ http://www.led-color.com/upload/201604/APA102-2020%20SMD%20LED.pdf ]
+
+     Remember to send MSB (most significant bit) first, and LSB, last.
+
+     [START][BRIGHT][BLUE][GREEN][RED] ... [BRIGHT][BLUE][GREEN][RED][END]
+
+     [START] is 32 zeros clocked in as data.
+     [END]   is 32 ones  clocked in as data.
+     [BRIGHT] is clocked in as three guard bits (all ones),
+              followed by five brightness bits (MSB first).
+     [BLUE] [GREEN] [RED] are each an 8-bit value.
+
+     The whole 8x (Pimoroni Blinkt) is therefore:
+
+     [START=32] + (([BRIGHT=3+5=8] + [BGR=24] x 8)=256) + [END=32]
+
+     256 + 64 = 320 bits per 8x Dotstar circuit board (Pimoroni Blinkt)
+
+END.

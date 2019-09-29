@@ -1,0 +1,72 @@
+NOTE: This file will be unmaintained, moving forward.
+
+Please refer to earlier versions of the program (atst_aa_rev0
+or atst_aa_rev01a and branches testing-aa or testing-bb).
+
+28 July, 2018 - 16:01 UTC
+
+________
+
+
+
+These instructions are mainly for the novice who does not
+know how to 'git checkout my_branch' (on their local machine,
+at the command line).
+
+The SAMD21 program is currently functional 'on branch testing-bb'
+(an earlier version is functional 'on branch master').
+
+Use 'git status' to verify the current working branch, once the
+repository has been cloned to your local hard disk drive).
+
+
+Clone - Compile - Install
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ $ git clone https://github.com/wa1tnr/atst_aa_rev01a.git
+
+ $ cd atst_aa_rev01a
+
+ $ git checkout testing-bb
+
+ $ cd ./gcc
+
+ $ make clean
+ $ make
+
+ # double-click to get steady green RGB and pulsing red LEDs on target board
+
+ $ make install  # requires Arduino IDE for its BOSSAC
+
+
+
+ Supplementary information follows.
+
+
+                - - - - -
+
+
+ $ cat gcc/scripts/_bossac_local.sh 
+#!/bin/sh
+
+# call with one argument - the path/file.bin (not .uf2) to upload using bossac
+
+if ! [ $1 ]; then
+   echo no args.  Exiting; fi
+   ~/.arduino15/packages/arduino/tools/bossac/1.7.0/bossac \
+    -i -d --port=/dev/ttyACM0 -U true -i -e -w -v ${1} -R  # .bin not .elf
+
+exit 0
+
+Change the path in _bossac_local.sh to point to your bossac,
+if it is different.
+
+Note that the Makefile itself provides the name of the .bin file
+that's passed on to bossac:
+
+ $ cat -n gcc/Makefile | sed 205q | tail -2
+   204  install:
+   205          ./scripts/_bossac_local.sh ./AtmelStart.bin
+ $ 
+
+Sat Jul 28 16:03:24 UTC 2018
