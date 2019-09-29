@@ -90,6 +90,14 @@ void DS_send_dim_blue_byte(void) {
     }
 }
 
+void DS_color_cyan(void) { // a 32-bit frame
+// following bright_B G R
+    DS_bright_bits(); // 8 bits
+    DS_send_dim_blue_byte(); // blue:  0x07  in 8 bits
+    DS_send_dim_blue_byte(); // green: 0x07
+    DS_send_8_clr_bits();    // red:   0x00  null - all 0's
+}
+
 void DS_color_dark(void) { // a 32-bit frame
     DS_bright_bits(); // 8 bits
     DS_send_8_clr_bits(); // blue:  0x00  in 8 bits
@@ -126,13 +134,30 @@ void DS_send_all_eight_dotstars_in_blue(void) {
     DS_END_signal();
 }
 
+void DS_send_two_pairs_dotstars_in_blue_n_cyan(void) {
+    DS_START_signal();
+    for(int i = (4); i > 0; i--) { // four pairs of blue, cyan
+        DS_color_blue();
+        DS_color_cyan();
+    }
+    DS_END_signal();
+}
+
 void DS_sends_demo(void) {
     init_dotstar_gpio();
     blank_blinkt();
     delay(1000); // TEMPORARY tnr 29 Sep 01:14z
     // new payload is:
     DS_send_all_eight_dotstars_in_blue();
-    delay(12000); // TEMPORARY tnr 29 Sep 01:14z
+    delay(5000);
+    blank_blinkt();
+    delay(800);
+    DS_send_two_pairs_dotstars_in_blue_n_cyan();
+    delay(7000);
+    blank_blinkt();
+    delay(800);
+    DS_send_all_eight_dotstars_in_blue();
+    delay(12000);
     while(-1);
 }
 
