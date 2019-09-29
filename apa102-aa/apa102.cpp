@@ -97,6 +97,14 @@ void DS_color_dark(void) { // a 32-bit frame
     DS_send_8_clr_bits(); // red:   0x00
 }
 
+void DS_color_blue(void) { // make this pixel a dim blue color
+    DS_bright_bits();   // 8 bits
+    DS_send_dim_blue_byte(); // blue:  0x07
+    for(int i = (2); i > 0; i--) {
+        DS_send_8_clr_bits(); // green, red both:  0x00
+    }
+}
+
 void blank_blinkt(void) {
     DS_START_signal(); // 32 bits
 
@@ -109,9 +117,23 @@ void blank_blinkt(void) {
     // but for the entire strip of 8 of them.
 }
 
+void DS_send_all_eight_dotstars_in_blue(void) {
+    DS_START_signal(); // 32 bits
+
+    for(int i = (8); i > 0; i--) {
+        DS_color_blue();  // each of eight pixels in dim blue
+    }
+    DS_END_signal();
+}
+
 void DS_sends_demo(void) {
     init_dotstar_gpio();
     blank_blinkt();
+    delay(1000); // TEMPORARY tnr 29 Sep 01:14z
+    // new payload is:
+    DS_send_all_eight_dotstars_in_blue();
+    delay(12000); // TEMPORARY tnr 29 Sep 01:14z
+    while(-1);
 }
 
 void setup() {
