@@ -80,6 +80,16 @@ void DS_END_signal(void) {
     }
 }
 
+void DS_send_dim_blue_byte(void) {
+    // blue, in 8 bits 0b00000111:
+    for(int i = (5); i > 0; i--) {
+        DS_clock_in_zero_data_bit();
+    }
+    for(int i = (3); i > 0; i--) {
+        DS_clock_in_data_bit();
+    }
+}
+
 void DS_color_dark(void) { // a 32-bit frame
     DS_bright_bits(); // 8 bits
     DS_send_8_clr_bits(); // blue:  0x00  in 8 bits
